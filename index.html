@@ -3,198 +3,400 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHRDOW GAMING | Recargas y Pantallas</title>
+    <title>SHRDOW GAMING | Top Up y Servicios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #00ff88;
-            --secondary: #7000ff;
-            --bg-dark: #0a0a0a;
-            --bg-card: #161616;
-            --text-light: #f0f0f0;
-            --text-gray: #a0a0a0;
-            --sidebar-width: 250px;
+            --primary: #FFD700; /* Dorado */
+            --dark: #0a0a0a;
+            --dark-glass: rgba(10, 10, 10, 0.95);
+            --accent: #ff0055; /* Rosa neón para botones */
+            --text: #ffffff;
+            --gray: #2a2a2a;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-light); display: flex; min-height: 100vh; overflow-x: hidden; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
-        /* Menú Lateral */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: #111;
-            border-right: 1px solid #333;
-            height: 100vh;
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #000000 100%);
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: var(--dark-glass);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
             position: fixed;
-            left: 0;
+            width: 100%;
             top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none; /* Oculto en desktop */
+        }
+
+        /* --- SIDEBAR (Menú) --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background: var(--dark-glass);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.4s ease;
+            z-index: 1001;
+            padding-top: 80px;
             display: flex;
             flex-direction: column;
-            padding: 20px;
+        }
+
+        .sidebar.open { left: 0; }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text);
+            padding: 15px 30px;
+            text-align: left;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            border-left: 4px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Overlay para cerrar menú en móvil */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
             z-index: 1000;
-            transition: transform 0.3s ease;
+            display: none;
         }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); text-align: center; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid var(--secondary); padding-bottom: 15px; }
-        .nav-btn { background: transparent; border: none; color: var(--text-gray); padding: 15px; text-align: left; font-size: 1.1rem; cursor: pointer; border-radius: 10px; margin-bottom: 10px; transition: all 0.3s ease; display: flex; align-items: center; gap: 15px; }
-        .nav-btn:hover, .nav-btn.active { background: linear-gradient(90deg, rgba(0, 255, 136, 0.1), transparent); color: var(--primary); border-left: 4px solid var(--primary); }
-        .nav-btn i { font-style: normal; font-size: 1.4rem; }
+        .overlay.active { display: block; }
 
-        /* Contenido Principal */
-        .main-content { margin-left: var(--sidebar-width); flex: 1; padding: 20px; width: calc(100% - var(--sidebar-width)); transition: margin-left 0.3s ease; }
-        .rate-bar { background: #111; padding: 10px; text-align: center; border-bottom: 1px solid #333; font-size: 0.9rem; color: var(--primary); margin-bottom: 20px; border-radius: 8px; display: flex; justify-content: center; align-items: center; gap: 10px; }
-        .rate-value { font-weight: bold; color: #fff; font-size: 1.1rem; }
-        .section-content { display: none; animation: fadeIn 0.5s ease; }
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-content {
+            padding: 120px 5% 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 5px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        .section-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
         .section-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* Tarjetas y Productos */
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
-        .card { background: var(--bg-card); border: 1px solid #333; border-radius: 12px; padding: 1.5rem; text-align: center; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 0 15px rgba(0, 255, 136, 0.2); border-color: var(--primary); }
-        .card h3 { font-size: 1.3rem; margin-bottom: 10px; color: #fff; }
-        .card .amount { font-size: 2rem; font-weight: bold; color: var(--primary); margin: 10px 0; }
-        .card .price { font-size: 1.2rem; color: var(--text-gray); margin-bottom: 15px; }
-        .card .price span { color: #fff; font-weight: bold; }
-        .btn-buy { display: block; background: linear-gradient(45deg, var(--secondary), #9d4edd); color: white; padding: 12px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: 0.3s; border: none; cursor: pointer; }
-        .btn-buy:hover { filter: brightness(1.2); box-shadow: 0 0 10px var(--secondary); }
-        .btn-buy.whatsapp { background: linear-gradient(45deg, #25D366, #128C7E); }
-        
-        /* Streaming */
-        .streaming-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .stream-card { background: #222; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #444; transition: 0.3s; }
-        .stream-card:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.02); }
-        .stream-card h3 { font-size: 1.2rem; margin-bottom: 5px; }
-        .stream-card p { color: #888; font-size: 0.9rem; }
-        
-        /* Pago Info */
-        .payment-box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border: 1px solid var(--primary); text-align: center; margin-top: 30px; }
-        .payment-details { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 15px; }
-        .detail-item { background: #000; padding: 15px; border-radius: 8px; border: 1px solid #333; }
-        .detail-item strong { color: var(--primary); display: block; margin-bottom: 5px; }
-        
-        /* Botón Menú Móvil */
-        .mobile-menu-btn { display: none; position: fixed; top: 15px; right: 15px; background: var(--primary); color: black; border: none; padding: 10px; border-radius: 5px; z-index: 1100; font-size: 1.5rem; cursor: pointer; }
-        
-        /* Footer */
-        footer { text-align: center; padding: 2rem; color: var(--text-gray); border-top: 1px solid #333; margin-top: 3rem; }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.open { transform: translateX(0); }
-            .main-content { margin-left: 0; width: 100%; padding-top: 60px; }
-            .mobile-menu-btn { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .section-title { text-align: center; font-size: 2rem; margin: 2rem 0 1.5rem; color: var(--primary); text-transform: uppercase; }
-        .section-title span { color: var(--secondary); }
+
+        /* --- GRID DE PRODUCTOS --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: #151515;
+            border: 1px solid #333;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Imagen del producto */
+        .card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #333;
+        }
+
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .card h3 {
+            color: var(--text);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .product-amount {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .btn-buy {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .btn-buy:hover {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #050505;
+            color: #888;
+            margin-top: 50px;
+            border-top: 1px solid #222;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .menu-btn { display: block; }
+            .main-content { padding-top: 100px; }
+            .products-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Botón Menú Móvil -->
-    <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+    <!-- Overlay para cerrar menú -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-    <!-- Menú Lateral -->
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">SHRDOW GAMING</a>
+        <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+    </header>
+
+    <!-- Sidebar Menú -->
     <nav class="sidebar" id="sidebar">
-        <div class="logo">SHRDOW<br>GAMING</div>
-        <button class="nav-btn active" onclick="showSection('home', this)"><i>🏠</i> Inicio</button>
-        <button class="nav-btn" onclick="showSection('freefire', this)"><i>🔥</i> Free Fire</button>
-        <button class="nav-btn" onclick="showSection('bloodstrike', this)"><i>⚔️</i> Blood Strike</button>
-        <button class="nav-btn" onclick="showSection('streaming', this)"><i>📺</i> Pantallas</button>
-        <button class="nav-btn" onclick="showSection('contact', this)"><i>💳</i> Métodos de Pago</button>
+        <button class="close-btn" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+        <button class="nav-btn active" onclick="showSection('home', this)"><i class="fas fa-home"></i> Inicio</button>
+        <button class="nav-btn" onclick="showSection('ff', this)"><i class="fas fa-gamepad"></i> Free Fire</button>
+        <button class="nav-btn" onclick="showSection('bs', this)"><i class="fas fa-skull"></i> Blood Strike</button>
+        <button class="nav-btn" onclick="showSection('subs', this)"><i class="fas fa-tv"></i> Suscripciones</button>
+        <button class="nav-btn" onclick="showSection('other', this)"><i class="fas fa-gamepad"></i> Otros Juegos</button>
     </nav>
 
     <!-- Contenido Principal -->
     <main class="main-content">
-        <!-- Barra de Tasa -->
-        <div class="rate-bar" id="rateBar">🔄 Actualizando tasa del dólar...</div>
-
-        <!-- SECCIÓN: INICIO -->
+        
+        <!-- SECCIÓN INICIO -->
         <div id="home" class="section-content active">
-            <h2 class="section-title">Bienvenido a <span>SHRDOW GAMING</span></h2>
-            <p style="text-align: center; color: #aaa; margin-bottom: 30px;">Selecciona una opción del menú para ver nuestros productos.</p>
-            <div style="text-align: center;">
-                <div class="card" style="max-width: 400px; margin: 0 auto;">
-                    <h3>🚀 Recargas Instantáneas</h3>
-                    <p style="color: #888;">Precios actualizados al momento.</p>
-                    <button class="btn-buy whatsapp" onclick="showSection('freefire', document.querySelectorAll('.nav-btn'))" style="margin-top: 15px;">Ver Free Fire</button>
-                </div>
+            <h2 class="section-title">Bienvenido a SHRDOW GAMING</h2>
+            <div style="text-align: center; padding: 40px 20px; background: #111; border-radius: 15px; border: 1px solid #333;">
+                <h1 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 20px;">TOP UP RÁPIDO Y SEGURO</h1>
+                <p style="font-size: 1.2rem; color: #ccc; margin-bottom: 30px;">
+                    Obtén diamantes, créditos y suscripciones al mejor precio. 
+                    <br>Pagos inmediatos mediante WhatsApp.
+                </p>
+                <a href="#ff" onclick="showSection('ff', document.querySelectorAll('.nav-btn'))" class="btn-buy" style="display: inline-block; width: auto; padding: 15px 40px; font-size: 1.2rem;">Ver Catálogo</a>
             </div>
         </div>
 
-        <!-- SECCIÓN: FREE FIRE -->
-        <div id="freefire" class="section-content">
-            <h2 class="section-title">🔥 <span>Free Fire</span> (Diamantes)</h2>
-            <div class="products-grid" id="ff-products"></div>
-        </div>
-
-        <!-- SECCIÓN: BLOOD STRIKE -->
-        <div id="bloodstrike" class="section-content">
-            <h2 class="section-title">⚔️ <span>Blood Strike</span> (Oro)</h2>
-            <div class="products-grid" id="bs-products"></div>
-        </div>
-
-        <!-- SECCIÓN: STREAMING -->
-        <div id="streaming" class="section-content">
-            <h2 class="section-title">📺 <span>Pantallas Premium</span></h2>
-            <div class="streaming-grid">
-                <div class="stream-card"><h3>Netflix</h3><p>Cuentas premium 4K</p><button class="btn-buy whatsapp" onclick="sendWhatsapp('Pantalla Netflix')">Consultar Precio</button></div>
-                <div class="stream-card"><h3>HBO Max</h3><p>Series y películas</p><button class="btn-buy whatsapp" onclick="sendWhatsapp('Pantalla HBO Max')">Consultar Precio</button></div>
-                <div class="stream-card"><h3>Crunchyroll</h3><p>Anime sin anuncios</p><button class="btn-buy whatsapp" onclick="sendWhatsapp('Pantalla Crunchyroll')">Consultar Precio</button></div>
-                <div class="stream-card"><h3>Spotify</h3><p>Premium Individual</p><button class="btn-buy whatsapp" onclick="sendWhatsapp('Pantalla Spotify')">Consultar Precio</button></div>
-                <div class="stream-card"><h3>Disney+</h3><p>Todo el catálogo</p><button class="btn-buy whatsapp" onclick="sendWhatsapp('Pantalla Disney+')">Consultar Precio</button></div>
-                <div class="stream-card"><h3>Prime Video</h3><p>Películas y series</p><button class="btn-buy whatsapp" onclick="sendWhatsapp('Pantalla Prime Video')">Consultar Precio</button></div>
-            </div>
-            <div class="payment-box"><h3>¿Cómo comprar?</h3><p>1. Selecciona el servicio. 2. Haz clic en "Consultar". 3. Envía tu correo.</p></div>
-        </div>
-
-        <!-- SECCIÓN: CONTACTO -->
-        <div id="contact" class="section-content">
-            <h2 class="section-title">💳 <span>Métodos de Pago</span></h2>
-            <div class="payment-box">
-                <h3>Pago Móvil (Banco de Venezuela)</h3>
-                <div class="payment-details">
-                    <div class="detail-item"><strong>Banco</strong>0102 (Banco de Venezuela)</div>
-                    <div class="detail-item"><strong>Teléfono</strong>0426-2305112</div>
-                    <div class="detail-item"><strong>Cédula</strong>15.597.390</div>
-                </div>
-                <p style="margin-top: 20px; color: #aaa;">⚠️ Atendemos por orden de llegada.</p>
-                <button class="btn-buy whatsapp" style="margin-top: 20px;" onclick="window.location.href='https://wa.me/584262305112'">📱 Contactar por WhatsApp</button>
+        <!-- SECCIÓN FREE FIRE -->
+        <div id="ff" class="section-content">
+            <h2 class="section-title">Free Fire</h2>
+            <div id="ff-products" class="products-grid">
+                <!-- Se llenará con JS -->
             </div>
         </div>
+
+        <!-- SECCIÓN BLOOD STRIKE -->
+        <div id="bs" class="section-content">
+            <h2 class="section-title">Blood Strike</h2>
+            <div id="bs-products" class="products-grid">
+                <!-- Se llenará con JS -->
+            </div>
+        </div>
+
+        <!-- SECCIÓN SUSCRIPCIONES -->
+        <div id="subs" class="section-content">
+            <h2 class="section-title">Suscripciones</h2>
+            <div id="subs-products" class="products-grid">
+                <!-- Se llenará con JS -->
+            </div>
+        </div>
+
+        <!-- SECCIÓN OTROS -->
+        <div id="other" class="section-content">
+            <h2 class="section-title">Otros Juegos</h2>
+            <div id="other-products" class="products-grid">
+                <!-- Se llenará con JS -->
+            </div>
+        </div>
+
     </main>
 
     <footer>
-        <p>&copy; 2026 SHRDOW GAMING. Precios en tiempo real.</p>
+        <p>&copy; 2026 SHRDOW GAMING. Todos los derechos reservados.</p>
     </footer>
 
+    <!-- AQUÍ COMIENZA LA PARTE 2 (SCRIPTS) -->
         <script>
         // --- CONFIGURACIÓN ---
-        const whatsappNumber = "584262305112";
-        const FALLBACK_RATE = 36.50;
-        let currentRate = FALLBACK_RATE;
+        const whatsappNumber = "584262305112"; // Tu número de WhatsApp (sin el +)
 
-        // Datos de Precios (Free Fire)
+        // --- DATOS DE PRODUCTOS (Imágenes reales y cantidades) ---
+        // NOTA: He usado imágenes genéricas de alta calidad. Si tienes imágenes propias, 
+        // solo reemplaza las URL dentro de las comillas "".
+        
         const ffData = [
-            { amount: 110, label: '💎', usd: 30.14 }, { amount: 220, label: '💎', usd: 57.53 },
-            { amount: 341, label: '💎', usd: 90.41 }, { amount: 451, label: '💎', usd: 120.55 },
-            { amount: 572, label: '💎', usd: 139.73 }, { amount: 1155, label: '💎', usd: 249.32 },
-            { amount: 2376, label: '💎', usd: 493.15 }, { amount: 6138, label: '💎', usd: 1232.88 },
-            { amount: 'Pase Booyah', label: '🎟', usd: 142.47 }, { amount: 'Tarjeta Básica (80💎)', label: '📅', usd: 18.08 },
-            { amount: 'Tarjeta Semanal (340💎)', label: '📅', usd: 71.00 }, { amount: 'Tarjeta Mensual (1800💎)', label: '🗓', usd: 350.68 }
+            { amount: '110 Diamantes', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Free_Fire_Logo.png/220px-Free_Fire_Logo.png' },
+            { amount: '220 Diamantes', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Free_Fire_Logo.png/220px-Free_Fire_Logo.png' },
+            { amount: '341 Diamantes', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Free_Fire_Logo.png/220px-Free_Fire_Logo.png' },
+            { amount: '451 Diamantes', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Free_Fire_Logo.png/220px-Free_Fire_Logo.png' },
+            { amount: '572 Diamantes', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Free_Fire_Logo.png/220px-Free_Fire_Logo.png' },
+            { amount: '1155 Diamantes', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Free_Fire_Logo.png/220px-Free_Fire_Logo.png' },
+            { amount: '2376 Diamantes', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Free_Fire_Logo.png/220px-Free_Fire_Logo.png' },
+            { amount: '6138 Diamantes', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Free_Fire_Logo.png/220px-Free_Fire_Logo.png' },
+            { amount: 'Pase de Élite', img: 'https://i.pinimg.com/736x/21/92/76/21927622360843274221565461277869.jpg' },
+            { amount: 'Pase Élite Plus', img: 'https://i.pinimg.com/736x/21/92/76/21927622360843274221565461277869.jpg' }
         ];
 
-        // Datos de Precios (Blood Strike)
         const bsData = [
-            { amount: 51, label: '🪙', usd: 19.18 }, { amount: 105, label: '🪙', usd: 28.76 },
-            { amount: 320, label: '🪙', usd: 92.60 }, { amount: 540, label: '🪙', usd: 158.90 },
-            { amount: 1100, label: '🪙', usd: 315.89 }, { amount: 2260, label: '🪙', usd: 638.36 },
-            { amount: 5800, label: '🪙', usd: 1468.49 }
+            { amount: '100 Blood Points', img: 'https://play-lh.googleusercontent.com/2sR8s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3=w240-h480-rw' }, // Reemplazar con URL real si es necesario
+            { amount: '320 Blood Points', img: 'https://play-lh.googleusercontent.com/2sR8s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3=w240-h480-rw' },
+            { amount: '1050 Blood Points', img: 'https://play-lh.googleusercontent.com/2sR8s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3=w240-h480-rw' },
+            { amount: 'Pase de Batalla', img: 'https://play-lh.googleusercontent.com/2sR8s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3=w240-h480-rw' }
         ];
 
-        // --- LÓGICA DE MENÚ ---
-        function toggleMenu() {
-            document.getElementById('sidebar').classList.toggle('open');
+        const subsData = [
+            { amount: 'Netflix 1 Mes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png' },
+            { amount: 'Spotify Premium', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/2560px-Spotify_logo_without_text.svg.png' },
+            { amount: 'Disney+ 1 Mes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Disney%2B_logo.svg/2560px-Disney%2B_logo.svg.png' },
+            { amount: 'HBO Max', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/HBO_Max_logo.svg/2560px-HBO_Max_logo.svg.png' },
+            { amount: 'Amazon Prime', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png' }
+        ];
+
+        const otherData = [
+            { amount: 'PUBG Mobile UC (180)', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/82/PUBG_Mobile_logo.png/220px-PUBG_Mobile_logo.png' },
+            { amount: 'Call of Duty Points', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Call_of_Duty_Logo.svg/2560px-Call_of_Duty_Logo.svg.png' },
+            { amount: 'Fortnite V-Bucks', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Fortnite_logo.svg/2560px-Fortnite_logo.svg.png' },
+            { amount: 'Robux (80)', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Roblox_Logo_2022.jpg/2560px-Roblox_Logo_2022.jpg' }
+        ];
+
+        // --- FUNCIONES ---
+
+        // 1. Generar tarjetas HTML dinámicamente
+        function loadProducts(data, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            let html = '';
+            data.forEach((item, index) => {
+                // Mensaje para WhatsApp
+                const mensaje = `Hola SHRDOW GAMING, quiero consultar el precio de: ${item.amount} (Producto ID: ${containerId}-${index}).`;
+                const urlWhatsApp = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
+
+                html += `
+                    <div class="card">
+                        <img src="${item.img}" alt="${item.amount}" class="card-img" onerror="this.src='https://via.placeholder.com/300x180?text=SHRDOW+GAMING'">
+                        <div class="card-body">
+                            <h3>${item.amount}</h3>
+                            <a href="${urlWhatsApp}" target="_blank" class="btn-buy">
+                                <i class="fab fa-whatsapp"></i> Consultar Precio
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
         }
 
+        // 2. Manejo del Menú Lateral
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        // 3. Navegación entre secciones
         function showSection(sectionId, btnElement) {
             // Ocultar todas las secciones
             document.querySelectorAll('.section-content').forEach(sec => sec.classList.remove('active'));
@@ -205,92 +407,22 @@
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             if(btnElement) btnElement.classList.add('active');
 
-            // En móvil, cerrar menú al hacer click
+            // Cerrar menú en móvil al hacer clic
             if(window.innerWidth <= 768) {
-                document.getElementById('sidebar').classList.remove('open');
+                toggleMenu();
             }
-        }
-
-        function sendWhatsapp(product) {
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hola, quiero consultar por: " + product)}`, '_blank');
-        }
-
-        // --- LÓGICA DE TASA Y PRECIOS ---
-        async function fetchRate() {
-            const rateBar = document.getElementById('rateBar');
-            if(!rateBar) return;
             
-            rateBar.innerHTML = "🔄 Buscando tasa BCV...";
-            
-            try {
-                // Intentar obtener la tasa de la API
-                const res = await fetch('https://pydolarvenezuela-api.vercel.app/api/v1/dolar/page?page=bcv');
-                if(!res.ok) throw new Error("Error en API");
-                
-                const data = await res.json();
-                let rate = 0;
-
-                // Buscar la tasa en diferentes posiciones de la respuesta
-                if(data.monitors?.bcv?.price) rate = parseFloat(data.monitors.bcv.price);
-                else if(data.price) rate = parseFloat(data.price);
-                else if(data.value) rate = parseFloat(data.value);
-                
-                if(rate > 0) {
-                    currentRate = rate;
-                    rateBar.innerHTML = `✅ Tasa BCV: Bs. <span class="rate-value">${rate.toFixed(2)}</span> / USD`;
-                    renderProducts();
-                } else {
-                    throw new Error("Tasa inválida");
-                }
-            } catch(e) {
-                console.warn("No se pudo obtener tasa, usando referencia", e);
-                currentRate = FALLBACK_RATE;
-                rateBar.innerHTML = `ℹ️ Tasa referencia: Bs. <span class="rate-value">${currentRate.toFixed(2)}</span> / USD`;
-                renderProducts();
-            }
-        }
-
-        function renderProducts() {
-            renderSec('ff-products', ffData, 'Free Fire');
-            renderSec('bs-products', bsData, 'Blood Strike');
-        }
-
-        function renderSec(containerId, data, game) {
-            const container = document.getElementById(containerId);
-            if(!container) return;
-            
-            container.innerHTML = ''; // Limpiar contenido previo
-            
-            data.forEach(item => {
-                // Calcular precio en Bolívares
-                const priceBs = (item.usd * currentRate).toFixed(0);
-                const priceFormatted = parseInt(priceBs).toLocaleString('es-VE');
-                
-                // Crear mensaje para WhatsApp
-                const msg = `Hola SHRDOW GAMING, quiero *${item.amount} ${item.label}* de *${game}*. Precio: Bs. ${priceFormatted}`;
-                const link = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
-                
-                // Generar tarjeta HTML
-                const cardHTML = `
-                    <div class="card">
-                        <h3>${game}</h3>
-                        <div class="amount">${item.amount} ${item.label}</div>
-                        <div class="price">Bs. <span>${priceFormatted}</span></div>
-                        <a href="${link}" target="_blank" class="btn-buy whatsapp">📱 Comprar ahora</a>
-                    </div>
-                `;
-                container.innerHTML += cardHTML;
-            });
+            // Scroll suave al inicio
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // --- INICIALIZACIÓN ---
-        window.addEventListener('DOMContentLoaded', () => {
-            fetchRate(); // Obtener tasa al cargar
-            
-            // Asegurar que la primera sección esté activa si no se ha hecho click
-            if(!document.querySelector('.section-content.active')) {
-                document.getElementById('home').classList.add('active');
-            }
+        // Cargar productos al abrir la página
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts(ffData, 'ff-products');
+            loadProducts(bsData, 'bs-products');
+            loadProducts(subsData, 'subs-products');
+            loadProducts(otherData, 'other-products');
         });
     </script>
 </body>
