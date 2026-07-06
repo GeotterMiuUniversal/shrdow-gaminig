@@ -10,7 +10,7 @@
             --primary: #ff002b; /* Rojo Gaming */
             --primary-hover: #ff3355;
             --dark-bg: #0a0a0a; 
-            --card-bg: rgba(15, 15, 15, 0.85); /* Un poco más oscuro para que resalte el texto sobre el fondo brillante */
+            --card-bg: rgba(15, 15, 15, 0.85); 
             --sidebar-bg: rgba(15, 15, 15, 0.95);
             --text-color: #ffffff; 
             --text-muted: #cccccc; 
@@ -53,7 +53,6 @@
             transform: scale(1);
         }
 
-        /* CAPA DE TINTE CORREGIDA: Muy baja opacidad para que el fondo brille al máximo (120%) */
         .dark-tint {
             position: fixed;
             top: 0;
@@ -98,7 +97,7 @@
             color: var(--text-color);
             font-size: 1.5rem;
             cursor: pointer;
-            display: none;
+            display: block; /* Asegura que responda en móviles */
         }
 
         /* --- SIDEBAR (Menú) --- */
@@ -133,6 +132,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            width: 100%;
         }
 
         .nav-btn:hover, .nav-btn.active {
@@ -197,7 +197,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- BIENVENIDA / INICIO (SOLO CON TEXTO SOBRE EL FONDO) --- */
+        /* --- BIENVENIDA / INICIO --- */
         .welcome-full-width {
             width: 100%;
             text-align: center;
@@ -212,7 +212,7 @@
             margin: 0 auto 35px;
             line-height: 1.6;
             font-weight: 600;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.9), -2px -2px 8px rgba(0,0,0,0.9);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
         }
 
         /* --- GRID DE PRODUCTOS --- */
@@ -230,7 +230,7 @@
             transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(12px); /* Mayor desenfoque detrás de tarjetas para asegurar legibilidad */
+            backdrop-filter: blur(12px); 
         }
 
         .card:hover {
@@ -261,7 +261,6 @@
             font-size: 1.15rem;
             margin-bottom: 15px;
             font-weight: 600;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
 
         .btn-buy {
@@ -293,7 +292,6 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
         /* --- FOOTER --- */
@@ -310,7 +308,6 @@
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
-            .menu-btn { display: block; }
             .main-content { padding-top: 110px; }
             .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
             .welcome-text { font-size: 1.2rem; }
@@ -327,7 +324,6 @@
     <div id="bg-streaming" class="bg-overlay" style="background-image: url('https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg');"></div>
 
     <div class="dark-tint"></div>
-
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
     <header>
@@ -337,12 +333,12 @@
 
     <nav class="sidebar" id="sidebar">
         <button class="close-btn" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
-        <button class="nav-btn active" onclick="showSection('home', this, 'bg-home')"><i class="fas fa-home"></i> Inicio</button>
-        <button class="nav-btn" onclick="showSection('ff', this, 'bg-ff')"><i class="fas fa-fire"></i> Free Fire</button>
-        <button class="nav-btn" onclick="showSection('bs', this, 'bg-bs')"><i class="fas fa-skull"></i> Blood Strike</button>
-        <button class="nav-btn" onclick="showSection('ml', this, 'bg-ml')"><i class="fas fa-shield-alt"></i> Mobile Legends</button>
-        <button class="nav-btn" onclick="showSection('roblox', this, 'bg-roblox')"><i class="fas fa-cube"></i> Roblox</button>
-        <button class="nav-btn" onclick="showSection('streaming', this, 'bg-streaming')"><i class="fas fa-tv"></i> Streaming</button>
+        <button class="nav-btn active" data-target="ff" onclick="showSection('home', this, 'bg-home')"><i class="fas fa-home"></i> Inicio</button>
+        <button class="nav-btn" data-target="ff" onclick="showSection('ff', this, 'bg-ff')"><i class="fas fa-fire"></i> Free Fire</button>
+        <button class="nav-btn" data-target="bs" onclick="showSection('bs', this, 'bg-bs')"><i class="fas fa-skull"></i> Blood Strike</button>
+        <button class="nav-btn" data-target="ml" onclick="showSection('ml', this, 'bg-ml')"><i class="fas fa-shield-alt"></i> Mobile Legends</button>
+        <button class="nav-btn" data-target="roblox" onclick="showSection('roblox', this, 'bg-roblox')"><i class="fas fa-cube"></i> Roblox</button>
+        <button class="nav-btn" data-target="streaming" onclick="showSection('streaming', this, 'bg-streaming')"><i class="fas fa-tv"></i> Streaming</button>
     </nav>
 
     <main class="main-content">
@@ -352,47 +348,17 @@
                 <p class="welcome-text">
                     Recargas inmediatas y 100% seguras. Elige tu apartado favorito en el menú lateral para consultar la disponibilidad de diamantes, robux y pases.
                 </p>
-                
-                <a href="#ff" onclick="showSection('ff', document.querySelectorAll('.nav-btn')[1], 'bg-ff')" class="btn-buy btn-large">
+                <a href="#ff" onclick="showSection('ff', document.querySelector('[data-target=\'ff\']'), 'bg-ff')" class="btn-buy btn-large">
                     <i class="fas fa-shopping-cart"></i> Ver Catálogo de Productos
                 </a>
             </div>
         </div>
 
-        <div id="ff" class="section-content">
-            <div class="catalog-container">
-                <h2 class="section-title">Free Fire</h2>
-                <div id="ff-products" class="products-grid"></div>
-            </div>
-        </div>
-
-        <div id="bs" class="section-content">
-            <div class="catalog-container">
-                <h2 class="section-title">Blood Strike</h2>
-                <div id="bs-products" class="products-grid"></div>
-            </div>
-        </div>
-
-        <div id="ml" class="section-content">
-            <div class="catalog-container">
-                <h2 class="section-title">Mobile Legends</h2>
-                <div id="ml-products" class="products-grid"></div>
-            </div>
-        </div>
-
-        <div id="roblox" class="section-content">
-            <div class="catalog-container">
-                <h2 class="section-title">Roblox</h2>
-                <div id="roblox-products" class="products-grid"></div>
-            </div>
-        </div>
-
-        <div id="streaming" class="section-content">
-            <div class="catalog-container">
-                <h2 class="section-title">Pantallas de Streaming</h2>
-                <div id="streaming-products" class="products-grid"></div>
-            </div>
-        </div>
+        <div id="ff" class="section-content"><div class="catalog-container"><h2 class="section-title">Free Fire</h2><div id="ff-products" class="products-grid"></div></div></div>
+        <div id="bs" class="section-content"><div class="catalog-container"><h2 class="section-title">Blood Strike</h2><div id="bs-products" class="products-grid"></div></div></div>
+        <div id="ml" class="section-content"><div class="catalog-container"><h2 class="section-title">Mobile Legends</h2><div id="ml-products" class="products-grid"></div></div></div>
+        <div id="roblox" class="section-content"><div class="catalog-container"><h2 class="section-title">Roblox</h2><div id="roblox-products" class="products-grid"></div></div></div>
+        <div id="streaming" class="section-content"><div class="catalog-container"><h2 class="section-title">Pantallas de Streaming</h2><div id="streaming-products" class="products-grid"></div></div></div>
 
     </main>
 
@@ -404,7 +370,6 @@
         const whatsappNumber = "584262305112";
         const defaultImg = "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg";
 
-        // --- DATOS DE PRODUCTOS ---
         const ffData = [
             { amount: '110 Diamantes', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/110%20diamantes.jpg" },
             { amount: '220 Diamantes', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/220%20diamantes%20.png" },
@@ -446,7 +411,6 @@
             { amount: 'Prime Video 1 Mes', img: defaultImg }
         ];
 
-        // --- FUNCIONES ---
         function loadProducts(data, containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -474,23 +438,29 @@
         function toggleMenu() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('overlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
+            if(sidebar && overlay) {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            }
         }
 
         function showSection(sectionId, btnElement, bgId) {
             document.querySelectorAll('.section-content').forEach(sec => sec.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
+            const targetSection = document.getElementById(sectionId);
+            if(targetSection) targetSection.classList.add('active');
             
             document.querySelectorAll('.bg-overlay').forEach(bg => bg.classList.remove('active'));
             if(bgId) {
-                document.getElementById(bgId).classList.add('active');
+                const targetBg = document.getElementById(bgId);
+                if(targetBg) targetBg.classList.add('active');
             }
 
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             if(btnElement) btnElement.classList.add('active');
 
-            if(window.innerWidth <= 768) {
+            // Cierra el menú solo si está abierto en versión móvil
+            const sidebar = document.getElementById('sidebar');
+            if(sidebar && sidebar.classList.contains('open')) {
                 toggleMenu();
             }
             
