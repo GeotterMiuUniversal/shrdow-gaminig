@@ -348,9 +348,9 @@
                 <p class="welcome-text">
                     Recargas inmediatas y 100% seguras. Elige tu apartado favorito en el menú lateral para consultar la disponibilidad de diamantes, robux y pases.
                 </p>
-                <a href="#ff" onclick="showSection('ff', document.querySelector('[data-target=\'ff\']'), 'bg-ff')" class="btn-buy btn-large">
-                    <i class="fas fa-shopping-cart"></i> Ver Catálogo de Productos
-                </a>
+                <button onclick="toggleMenu()" class="btn-buy btn-large">
+                    <i class="fas fa-bars"></i> Ver Catálogo de Productos
+                </button>
             </div>
         </div>
 
@@ -369,9 +369,6 @@
     <script>
         const whatsappNumber = "584262305112";
 
-        // IMAGEN POR DEFECTO: Puedes cambiar este link por la foto general que quieras usar si un producto no tiene foto propia
-        const defaultImg = "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg";
-
         // PRODUCTOS DE FREE FIRE
         const ffData = [
             { amount: '110 Diamantes', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/110%20diamantes.jpg" },
@@ -384,38 +381,38 @@
             { amount: 'Pase de Élite', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pase%20elite%20free%20fire.jpg" }
         ];
 
-        // PRODUCTOS DE BLOOD STRIKE
+        // PRODUCTOS DE BLOOD STRIKE (Corregida la comilla de los 1050 Blood Points)
         const bsData = [
             { amount: '100 Blood Points', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/100%20oro.jpg" },
             { amount: '320 Blood Points', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/320%20oro.jpg" },
-            { amount: '1050 Blood Points', img: https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/1050%20oro.jpg },
-            { amount: 'Pase de Batalla', img: defaultImg }
+            { amount: '1050 Blood Points', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/1050%20oro.jpg" },
+            { amount: 'Pase de Batalla', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" }
         ];
 
         // PRODUCTOS DE MOBILE LEGENDS
         const mlData = [
-            { amount: 'Diamonds Semanales', img: defaultImg },
-            { amount: 'Diamonds Mensuales', img: defaultImg },
-            { amount: 'Twilight Pass', img: defaultImg }
+            { amount: 'Diamonds Semanales', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" },
+            { amount: 'Diamonds Mensuales', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" },
+            { amount: 'Twilight Pass', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" }
         ];
 
         // PRODUCTOS DE ROBLOX
         const robloxData = [
-            { amount: '282 Robux', img: defaultImg },
-            { amount: '475 Robux', img: defaultImg },
-            { amount: '539 Robux', img: defaultImg },
-            { amount: '1.000 Robux', img: defaultImg }
+            { amount: '282 Robux', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" },
+            { amount: '475 Robux', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" },
+            { amount: '539 Robux', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" },
+            { amount: '1.000 Robux', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" }
         ];
 
         // PRODUCTOS DE STREAMING
         const streamingData = [
-            { amount: 'Netflix 1 Mes', img: defaultImg },
-            { amount: 'HBO Max 1 Mes', img: defaultImg },
-            { amount: 'Crunchyroll Premium', img: defaultImg },
-            { amount: 'Vix Premium', img: defaultImg },
-            { amount: 'Spotify Premium', img: defaultImg },
-            { amount: 'Disney+ 1 Mes', img: defaultImg },
-            { amount: 'Prime Video 1 Mes', img: defaultImg }
+            { amount: 'Netflix 1 Mes', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" },
+            { amount: 'HBO Max 1 Mes', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" },
+            { amount: 'Crunchyroll Premium', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" },
+            { amount: 'Vix Premium', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" },
+            { amount: 'Spotify Premium', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" },
+            { amount: 'Disney+ 1 Mes', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" },
+            { amount: 'Prime Video 1 Mes', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg" }
         ];
 
         function loadProducts(data, containerId) {
