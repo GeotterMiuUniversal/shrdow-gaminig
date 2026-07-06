@@ -10,7 +10,7 @@
             --primary: #ff002b; /* Rojo Gaming */
             --primary-hover: #ff3355;
             --dark-bg: #0a0a0a; 
-            --card-bg: rgba(20, 20, 20, 0.85); /* Gris un poco más sólido para las tarjetas */
+            --card-bg: rgba(15, 15, 15, 0.85); /* Un poco más oscuro para que resalte el texto sobre el fondo brillante */
             --sidebar-bg: rgba(15, 15, 15, 0.95);
             --text-color: #ffffff; 
             --text-muted: #cccccc; 
@@ -53,7 +53,7 @@
             transform: scale(1);
         }
 
-        /* CAPA DE TINTE CORREGIDA: Menos opacidad negra para que los fondos brillen y se vean claros */
+        /* CAPA DE TINTE CORREGIDA: Muy baja opacidad para que el fondo brille al máximo (120%) */
         .dark-tint {
             position: fixed;
             top: 0;
@@ -61,7 +61,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(10, 10, 10, 0.6) 100%);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(10, 10, 10, 0.3) 100%);
         }
 
         /* --- HEADER --- */
@@ -163,14 +163,13 @@
 
         /* --- CONTENIDO PRINCIPAL --- */
         .main-content {
-            padding: 100px 0px 50px; /* Ajustado para el diseño de pantalla completa en Inicio */
+            padding: 140px 0px 50px; 
             max-width: 1400px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
         }
 
-        /* Ajuste de padding lateral para los catálogos normales */
         .catalog-container {
             padding: 20px 5%;
         }
@@ -183,6 +182,7 @@
             letter-spacing: 1px;
             border-left: 5px solid var(--primary);
             padding-left: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
 
         .section-content {
@@ -197,30 +197,22 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- BIENVENIDA / INICIO (ESTILO PANTALLA COMPLETA) --- */
+        /* --- BIENVENIDA / INICIO (SOLO CON TEXTO SOBRE EL FONDO) --- */
         .welcome-full-width {
             width: 100%;
             text-align: center;
             position: relative;
-        }
-
-        .cover-img-full {
-            width: 100vw;
-            max-height: 70vh; /* Ocupa gran parte de la altura visual */
-            object-fit: cover; /* Recorta perfectamente sin deformar la imagen */
-            border-bottom: 3px solid var(--primary);
-            box-shadow: 0 10px 30px rgba(255, 0, 43, 0.4);
-            margin-bottom: 30px;
+            padding: 60px 20px;
         }
 
         .welcome-text {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: var(--text-color);
-            max-width: 600px;
-            margin: 0 auto 25px;
+            max-width: 700px;
+            margin: 0 auto 35px;
             line-height: 1.6;
-            padding: 0 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            font-weight: 600;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.9), -2px -2px 8px rgba(0,0,0,0.9);
         }
 
         /* --- GRID DE PRODUCTOS --- */
@@ -238,7 +230,7 @@
             transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(10px); /* Hace que las tarjetas resalten más sobre los fondos brillantes */
+            backdrop-filter: blur(12px); /* Mayor desenfoque detrás de tarjetas para asegurar legibilidad */
         }
 
         .card:hover {
@@ -269,6 +261,7 @@
             font-size: 1.15rem;
             margin-bottom: 15px;
             font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
 
         .btn-buy {
@@ -300,6 +293,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
         /* --- FOOTER --- */
@@ -307,7 +301,7 @@
             text-align: center;
             padding: 30px;
             background: rgba(5, 5, 5, 0.95);
-            color: #666;
+            color: #888;
             margin-top: 60px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
@@ -317,9 +311,9 @@
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             .menu-btn { display: block; }
-            .main-content { padding-top: 75px; }
+            .main-content { padding-top: 110px; }
             .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
-            .cover-img-full { max-height: 50vh; }
+            .welcome-text { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -355,8 +349,6 @@
         
         <div id="home" class="section-content active">
             <div class="welcome-full-width">
-                <img src="" alt="SHRDOW GAMINIG Portada" class="cover-img-full">
-                
                 <p class="welcome-text">
                     Recargas inmediatas y 100% seguras. Elige tu apartado favorito en el menú lateral para consultar la disponibilidad de diamantes, robux y pases.
                 </p>
@@ -410,48 +402,48 @@
 
     <script>
         const whatsappNumber = "584262305112";
+        const defaultImg = "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg";
 
         // --- DATOS DE PRODUCTOS ---
         const ffData = [
-            { amount: '110 Diamantes', img: 'https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg' },
-            { amount: '220 Diamantes', img: 'https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg' },
-            { amount: '341 Diamantes', img: 'https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg' },
-            { amount: '451 Diamantes', img: 'https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg' },
-            { amount: '572 Diamantes', img: 'https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg' },
-            { amount: '1155 Diamantes', img: 'https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg' },
-            { amount: '2376 Diamantes', img: 'https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg' },
-            { amount: 'Pase de Élite', img: 'https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pantalla%20de%20inicio.jpg' }
+            { amount: '110 Diamantes', img: defaultImg },
+            { amount: '220 Diamantes', img: defaultImg },
+            { amount: '341 Diamantes', img: defaultImg },
+            { amount: '451 Diamantes', img: defaultImg },
+            { amount: '572 Diamantes', img: defaultImg },
+            { amount: '1155 Diamantes', img: defaultImg },
+            { amount: '2376 Diamantes', img: defaultImg },
+            { amount: 'Pase de Élite', img: defaultImg }
         ];
 
         const bsData = [
-            { amount: '100 Blood Points', img: 'https://cdn.statically.io/img/images.unsplash.com/photo-1612287230202-1bf1d85d1bdf?w=400' },
-            { amount: '320 Blood Points', img: 'https://cdn.statically.io/img/images.unsplash.com/photo-1612287230202-1bf1d85d1bdf?w=400' },
-            { amount: '1050 Blood Points', img: 'https://cdn.statically.io/img/images.unsplash.com/photo-1612287230202-1bf1d85d1bdf?w=400' },
-            { amount: 'Pase de Batalla', img: 'https://cdn.statically.io/img/images.unsplash.com/photo-1542751371-adc38448a05e?w=400' }
+            { amount: '100 Blood Points', img: defaultImg },
+            { amount: '320 Blood Points', img: defaultImg },
+            { amount: '1050 Blood Points', img: defaultImg },
+            { amount: 'Pase de Batalla', img: defaultImg }
         ];
 
         const mlData = [
-            { amount: 'Diamonds Semanales', img: 'https://cdn.statically.io/img/images.unsplash.com/photo-1553481187-be93c21490a9?w=400' },
-            { amount: 'Diamonds Mensuales', img: 'https://cdn.statically.io/img/images.unsplash.com/photo-1553481187-be93c21490a9?w=400' },
-            { amount: 'Twilight Pass', img: 'https://cdn.statically.io/img/images.unsplash.com/photo-1553481187-be93c21490a9?w=400' }
+            { amount: 'Diamonds Semanales', img: defaultImg },
+            { amount: 'Diamonds Mensuales', img: defaultImg },
+            { amount: 'Twilight Pass', img: defaultImg }
         ];
 
-        // PAQUETES ROBLOX SOLICITADOS
         const robloxData = [
-            { amount: '282 Robux', img: 'https://cdn.statically.io/img/images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400' },
-            { amount: '475 Robux', img: 'https://cdn.statically.io/img/images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400' },
-            { amount: '539 Robux', img: 'https://cdn.statically.io/img/images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400' },
-            { amount: '1.000 Robux', img: 'https://cdn.statically.io/img/images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400' }
+            { amount: '282 Robux', img: defaultImg },
+            { amount: '475 Robux', img: defaultImg },
+            { amount: '539 Robux', img: defaultImg },
+            { amount: '1.000 Robux', img: defaultImg }
         ];
 
         const streamingData = [
-            { amount: 'Netflix 1 Mes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/1200px-Netflix_2015_logo.svg.png' },
-            { amount: 'HBO Max 1 Mes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/HBO_Max_logo.svg/1200px-HBO_Max_logo.svg.png' },
-            { amount: 'Crunchyroll Premium', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Crunchyroll_Logo.svg/1200px-Crunchyroll_Logo.svg.png' },
-            { amount: 'Vix Premium', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/ViX_logo.svg/1200px-ViX_logo.svg.png' },
-            { amount: 'Spotify Premium', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/1024px-Spotify_logo_without_text.svg.png' },
-            { amount: 'Disney+ 1 Mes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Disney%2B_logo.svg/1200px-Disney%2B_logo.svg.png' },
-            { amount: 'Prime Video 1 Mes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Amazon_Prime_Video_logo.svg/1200px-Amazon_Prime_Video_logo.svg.png' }
+            { amount: 'Netflix 1 Mes', img: defaultImg },
+            { amount: 'HBO Max 1 Mes', img: defaultImg },
+            { amount: 'Crunchyroll Premium', img: defaultImg },
+            { amount: 'Vix Premium', img: defaultImg },
+            { amount: 'Spotify Premium', img: defaultImg },
+            { amount: 'Disney+ 1 Mes', img: defaultImg },
+            { amount: 'Prime Video 1 Mes', img: defaultImg }
         ];
 
         // --- FUNCIONES ---
