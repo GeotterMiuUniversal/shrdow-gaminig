@@ -97,10 +97,10 @@
             color: var(--text-color);
             font-size: 1.5rem;
             cursor: pointer;
-            display: block; /* Asegura que responda en móviles */
+            display: block;
         }
 
-        /* --- SIDEBAR (Menú) --- */
+        /* --- SIDEBAR --- */
         .sidebar {
             position: fixed;
             top: 0;
@@ -197,7 +197,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- BIENVENIDA / INICIO --- */
+        /* --- BIENVENIDA --- */
         .welcome-full-width {
             width: 100%;
             text-align: center;
@@ -333,7 +333,7 @@
 
     <nav class="sidebar" id="sidebar">
         <button class="close-btn" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
-        <button class="nav-btn active" data-target="ff" onclick="showSection('home', this, 'bg-home')"><i class="fas fa-home"></i> Inicio</button>
+        <button class="nav-btn active" data-target="home" onclick="showSection('home', this, 'bg-home')"><i class="fas fa-home"></i> Inicio</button>
         <button class="nav-btn" data-target="ff" onclick="showSection('ff', this, 'bg-ff')"><i class="fas fa-fire"></i> Free Fire</button>
         <button class="nav-btn" data-target="bs" onclick="showSection('bs', this, 'bg-bs')"><i class="fas fa-skull"></i> Blood Strike</button>
         <button class="nav-btn" data-target="ml" onclick="showSection('ml', this, 'bg-ml')"><i class="fas fa-shield-alt"></i> Mobile Legends</button>
@@ -369,6 +369,10 @@
     <script>
         const whatsappNumber = "584262305112";
 
+        // IMAGEN POR DEFECTO: Puedes cambiar este link por la foto general que quieras usar si un producto no tiene foto propia
+        const defaultImg = "https://via.placeholder.com/300x160?text=SHRDOW+GAMINIG";
+
+        // PRODUCTOS DE FREE FIRE
         const ffData = [
             { amount: '110 Diamantes', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/110%20diamantes.jpg" },
             { amount: '220 Diamantes', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/220%20diamantes%20.png" },
@@ -380,6 +384,7 @@
             { amount: 'Pase de Élite', img: "https://raw.githubusercontent.com/GeotterMiuUniversal/shrdow-gaminig/refs/heads/main/pase%20elite%20free%20fire.jpg" }
         ];
 
+        // PRODUCTOS DE BLOOD STRIKE
         const bsData = [
             { amount: '100 Blood Points', img: defaultImg },
             { amount: '320 Blood Points', img: defaultImg },
@@ -387,12 +392,14 @@
             { amount: 'Pase de Batalla', img: defaultImg }
         ];
 
+        // PRODUCTOS DE MOBILE LEGENDS
         const mlData = [
             { amount: 'Diamonds Semanales', img: defaultImg },
             { amount: 'Diamonds Mensuales', img: defaultImg },
             { amount: 'Twilight Pass', img: defaultImg }
         ];
 
+        // PRODUCTOS DE ROBLOX
         const robloxData = [
             { amount: '282 Robux', img: defaultImg },
             { amount: '475 Robux', img: defaultImg },
@@ -400,6 +407,7 @@
             { amount: '1.000 Robux', img: defaultImg }
         ];
 
+        // PRODUCTOS DE STREAMING
         const streamingData = [
             { amount: 'Netflix 1 Mes', img: defaultImg },
             { amount: 'HBO Max 1 Mes', img: defaultImg },
@@ -457,7 +465,6 @@
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             if(btnElement) btnElement.classList.add('active');
 
-            // Cierra el menú solo si está abierto en versión móvil
             const sidebar = document.getElementById('sidebar');
             if(sidebar && sidebar.classList.contains('open')) {
                 toggleMenu();
